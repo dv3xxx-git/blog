@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
     <head>
         <meta charset="utf-8">
@@ -71,25 +71,42 @@
                     @if (Auth::check())
                         <a href="{{ url('/home') }}">Home</a>
                     @else
-                        <a href="{{ url('/login') }}">Login</a>
-                        <a href="{{ url('/register') }}">Register</a>
+                        <a href="{{ url('/login') }}">Sign in</a>
+                        <a href="{{ url('/register') }}">Sign Up</a>
                     @endif
                 </div>
             @endif
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
+            @endif
+            <form action="{{ route('create_paste') }}" method="post">
+              {{csrf_field()}}
+              <textarea name="name" placeholder="Введите пасту" id="name"> </textarea>
+              <select name="Time">
+                <option value="s1">Never</option>
+                <option value="s2">10 минут</option>
+                <option value="s3">1 час</option>
+                <option value="s4">3 часа</option>
+                <option value="s5">1 день</option>
+                <option value="s6">1 неделя</option>
+                <option value="s7">1 месяц</option>
+              </select>
+              <select name="PastePriv">
+                <option value="p1">общий доступ</option>
+                <option value="p2">По ссылке</option>
+                <option value="p3">Приватный</option>
+              <select>
+              <input type="text" name="Pname" placeholder="введите название пасты" id="Pname"></input>
+              <button type="submit" class="btn btn-success">Добавить пасту</button>
+            </form>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
         </div>
     </body>
 </html>
